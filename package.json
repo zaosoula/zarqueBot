@@ -1,0 +1,37 @@
+{
+    "name": "zarque-bot",
+    "version": "1.0.0",
+    "description": "A spy discord bot",
+    "author": "Zao Soula <zaonono@hotmail.fr>",
+    "bin": {
+        "module-name": "./bin/module-name"
+    },
+    "scripts": {
+        "start": "node bot.js"
+    },
+    "main": "bot.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/zarque/zarqueBot"
+    },
+    "bugs": {
+        "url": "https://github.com/zarque/zarqueBot/issues"
+    },
+    "keywords": [
+        "discord",
+        "bot",
+        "browsenpm"
+    ],
+    "dependencies": {
+        "ffmpeg": "0.0.4",
+        "forever": "^0.15.3",
+        "node-json-db": "*",
+        "node-opus": "^0.2.4",
+        "opusscript": "0.0.3"
+    },
+    "devDependencies": {
+        "discord.js": "*",
+        "node-json-db": "*"
+    },
+    "license": "MIT"
+}
