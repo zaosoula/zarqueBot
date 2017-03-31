@@ -108,8 +108,11 @@ exports.commands = {
                 db.delete("/" + key + "/waitEvent");
                 console.log("- Stop : " + key);
             });
-            console.log("Stopping...");
-            process.exit();
+            console.log("Logout...");
+            bot.destroy().then(function(){
+              console.log("Stopping...");
+              process.exit();
+            })
         }
     },
 }
