@@ -7,7 +7,7 @@
         "module-name": "./bin/module-name"
     },
     "scripts": {
-        "start": "node bot.js"
+        "start": "clear && node bot.js"
     },
     "main": "bot.js",
     "repository": {
