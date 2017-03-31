@@ -53,14 +53,12 @@ exports.commands = {
                     break;
                 case 'users':
                 case 'user':
-                    console.log(bot.users.length);
                     msg.reply("Generating list of users...");
                     usersArray = []
 
                     bot.users.forEach(function(user) {
                         usersArray.push("<@" + user.id + "> - " + user.presence.status);
                     });
-                    console.log(usersArray);
                     msg.channel.sendEmbed({
                         color: 3447003,
                         fields: [{
