@@ -54,13 +54,13 @@ bot.on("message", message => {
             return;
         }
 
-        bd.save(message.author.username, 'message', {
+        bd.save(message.author.id, 'message', {
             message: message
         });
 
-        wait = bd.isWait(message.author.username, 'typingStop');
+        wait = bd.isWait(message.author.id, 'typingStop');
         if (wait.status === true) {
-            bd.saveIn(message.author.username, "typingStart", wait.id, "message", bd.lastId(message.author.username, 'message'))
+            bd.saveIn(message.author.id, "typingStart", wait.id, "message", bd.lastId(message.author.id, 'message'))
         }
 
         if (message.channel.type == 'dm') {
@@ -136,8 +136,8 @@ bot.on("message", message => {
                 }
             }
         } else {
-            bd.addStat(message.author.username, message.channel.guild.id, message.channel.id, 'message', 1);
 
+            bd.addStat(message.author.id, message.channel.guild.id, message.channel.id, 'message', 1);
         }
     }
 
@@ -163,11 +163,11 @@ bot.on("userUpdate", (oldUser, newUser) => {
 *****************************************************/
 bot.on("typingStart", (channel, user) => {
 
-    bd.save(user.username, 'typingStart', {
+    bd.save(user.id, 'typingStart', {
         channel: channel,
         user: user
     });
-    bd.wait(user.username, 'typingStop', bd.lastId(user.username, 'typingStart'))
+    bd.wait(user.id, 'typingStop', bd.lastId(user.id, 'typingStart'))
 
 });
 
@@ -176,15 +176,15 @@ bot.on("typingStart", (channel, user) => {
 *****************************************************/
 bot.on("typingStop", (channel, user) => {
 
-    bd.save(user.username, 'typingStop', {
+    bd.save(user.id, 'typingStop', {
         channel: channel,
         user: user
     });
 
-    wait = bd.isWait(user.username, 'typingStop');
+    wait = bd.isWait(user.id, 'typingStop');
     if (wait.status === true) {
-        bd.saveIn(user.username, "typingStart", wait.id, "typingStop", bd.lastId(user.username, 'typingStop'))
-        bd.disableWait(user.username, 'typingStop')
+        bd.saveIn(user.id, "typingStart", wait.id, "typingStop", bd.lastId(user.id, 'typingStop'))
+        bd.disableWait(user.id, 'typingStop')
     }
 });
 
@@ -192,7 +192,7 @@ bot.on("typingStop", (channel, user) => {
                                         PRESENCEUPDATE
 *****************************************************/
 bot.on("presenceUpdate", (oldUser, newUser) => {
-    bd.save(newUser.user.username, "presenceUpdate", {
+    bd.save(newUser.user.id, "presenceUpdate", {
         oldPresence: oldUser.frozenPresence,
         newPresence: newUser.user.presence,
         oldUser: oldUser,
@@ -205,18 +205,18 @@ bot.on("presenceUpdate", (oldUser, newUser) => {
 *****************************************************/
 bot.on("guildMemberSpeaking", (user, speaking) => {
     if (user.speaking) {
-        bd.save(user.user.username, 'speakingStart', {
+        bd.save(user.user.id, 'speakingStart', {
             user: user
         });
-        bd.wait(user.user.username, 'speakingStop', bd.lastId(user.user.username, 'speakingStart'))
+        bd.wait(user.user.id, 'speakingStop', bd.lastId(user.user.id, 'speakingStart'))
     } else {
-        bd.save(user.user.username, 'speakingStop', {
+        bd.save(user.user.id, 'speakingStop', {
             user: user
         });
-        wait = bd.isWait(user.user.username, 'speakingStop');
+        wait = bd.isWait(user.user.id, 'speakingStop');
         if (wait.status === true) {
-            bd.saveIn(user.user.username, "speakingStart", wait.id, "speakingStop", bd.lastId(user.user.username, 'speakingStop'))
-            bd.disableWait(user.user.username, 'speakingStop')
+            bd.saveIn(user.user.id, "speakingStart", wait.id, "speakingStop", bd.lastId(user.user.id, 'speakingStop'))
+            bd.disableWait(user.user.id, 'speakingStop')
         }
     }
 })
