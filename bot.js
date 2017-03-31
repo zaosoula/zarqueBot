@@ -136,8 +136,8 @@ bot.on("message", message => {
                 }
             }
         } else {
-
             bd.addStat(message.author.id, message.channel.guild.id, message.channel.id, 'message', 1);
+            bd.addStat(message.author.id, 'total', 'total', 'lastSeen', Date.now(), true);
         }
     }
 
@@ -169,6 +169,8 @@ bot.on("typingStart", (channel, user) => {
     });
     bd.wait(user.id, 'typingStop', bd.lastId(user.id, 'typingStart'))
 
+    bd.addStat(user.id, 'total', 'total', 'lastSeen', Date.now(), true);
+
 });
 
 /*****************************************************
@@ -186,6 +188,9 @@ bot.on("typingStop", (channel, user) => {
         bd.saveIn(user.id, "typingStart", wait.id, "typingStop", bd.lastId(user.id, 'typingStop'))
         bd.disableWait(user.id, 'typingStop')
     }
+
+    bd.addStat(user.id, 'total', 'total', 'lastSeen', Date.now(), true);
+
 });
 
 /*****************************************************
@@ -198,6 +203,9 @@ bot.on("presenceUpdate", (oldUser, newUser) => {
         oldUser: oldUser,
         newUser: newUser
     })
+
+    bd.addStat(newUser.author.id, 'total', 'total', 'lastSeen', Date.now(), true);
+
 });
 
 /*****************************************************
@@ -219,6 +227,8 @@ bot.on("guildMemberSpeaking", (user, speaking) => {
             bd.disableWait(user.user.id, 'speakingStop')
         }
     }
+
+    bd.addStat(user.user.id, 'total', 'total', 'lastSeen', Date.now(), true);
 })
 
 

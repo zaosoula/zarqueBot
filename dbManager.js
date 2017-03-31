@@ -41,7 +41,7 @@ exports.lastId = function(username, eventName) {
     return db.getData("/" + username + "/event/" + eventName).length - 1;
 }
 
-exports.addStat = function(username, serverName, channelName, statName, number) {
+exports.addStat = function(username, serverName, channelName, statName, number, overwrite=false) {
     try {
         lastValue = db.getData("/" + username + "/stat/" + serverName + "/" + channelName + "/" + statName + "/value");
         console.log(lastValue, number, lastValue + number);
@@ -50,6 +50,11 @@ exports.addStat = function(username, serverName, channelName, statName, number) 
         console.log(number, lastValue + number);
 
     }
-    db.push("/" + username + "/stat/" + serverName + "/" + channelName + "/" + statName + "/value", lastValue + number, true);
+    if(overwrite){
+      db.push("/" + username + "/stat/" + serverName + "/" + channelName + "/" + statName + "/value", lastValue + number, true);
+    }else{
+      db.push("/" + username + "/stat/" + serverName + "/" + channelName + "/" + statName + "/value", number, true);
+
+    }
     db.push("/" + username + "/stat/" + serverName + "/" + channelName + "/" + statName + "/lastUpdate", Date.now(), true);
 }
