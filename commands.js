@@ -19,8 +19,7 @@ exports.commands = {
     },
     "list": {
         name: "list",
-        description: "Returns arguments.",
-        extendedhelp: "Returns arguments.",
+        extendedhelp: "Return severs or users list knew by the bot.",
         usage: "<servers|users>",
         process: function(bot, msg, params) {
             switch (params[0]) {
@@ -77,9 +76,9 @@ exports.commands = {
     },
     "clear": {
         name: "clear",
-        description: "Returns **Yo**.",
-        extendedhelp: "THE BOT SAY **Yo** !",
         usage: "<all|{username}>",
+        description: "Clear data",
+        extendedhelp: "Clear data",
         process: function(bot, msg, params) {
             switch (params[0]) {
                 case 'all':
