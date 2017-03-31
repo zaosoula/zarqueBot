@@ -65,76 +65,80 @@ bot.on("message", message => {
 
         if (message.channel.type == 'dm') {
 
-            var cmdTxt = message.content.split(" ")[0].toLowerCase();
-            var params = message.content.substring(cmdTxt.length + 1); //add one for the space
-            var params = params.split(" ");
-            if (cmdTxt === "help") { // Help is special, as it isn't a real 'command'
-                console.log("- - RECIVE COMMAND : " + cmdTxt);
-                var messageArray = []; // Build a Messsage array, this makes all the messages send as one.
-                var commandnames = []; // Build a array of names from commands.
-                for (cmd in commands) {
-                    var info = cmd;
-                    var usage = commands[cmd].usage;
-                    if (usage) {
-                        info += " " + usage;
-                    }
-                    var description = commands[cmd].description;
-                    if (description) {
-                        info += "\n\t" + description;
-                    }
-                }
-                if (!params[0]) {
-                    messageArray.push("These are the currently avalible commands, use `help <command_name>` to learn more about a specific command.");
-                    messageArray.push("");
-                    for (index in commands) {
-                        messageArray.push("**" + commands[index].name + "** " + commands[index].usage + "\n\t_" + commands[index].description + "_\n");
-                    }
-                    messageArray.push("");
-                    messageArray.push("If you have any questions, or if you don't get something, contact <@93026825432756224>");
-                    message.channel.sendMessage(messageArray);
-                }
-                if (params[0]) {
+          config.admins.forEach(function(adminId){
+            if(message.author.id == adminId){
+              var cmdTxt = message.content.split(" ")[0].toLowerCase();
+              var params = message.content.substring(cmdTxt.length + 1); //add one for the space
+              var params = params.split(" ");
+              if (cmdTxt === "help") { // Help is special, as it isn't a real 'command'
+                  console.log("- - RECIVE COMMAND : " + cmdTxt);
+                  var messageArray = []; // Build a Messsage array, this makes all the messages send as one.
+                  var commandnames = []; // Build a array of names from commands.
+                  for (cmd in commands) {
+                      var info = cmd;
+                      var usage = commands[cmd].usage;
+                      if (usage) {
+                          info += " " + usage;
+                      }
+                      var description = commands[cmd].description;
+                      if (description) {
+                          info += "\n\t" + description;
+                      }
+                  }
+                  if (!params[0]) {
+                      messageArray.push("These are the currently avalible commands, use `help <command_name>` to learn more about a specific command.");
+                      messageArray.push("");
+                      for (index in commands) {
+                          messageArray.push("**" + commands[index].name + "** " + commands[index].usage + "\n\t_" + commands[index].description + "_\n");
+                      }
+                      messageArray.push("");
+                      messageArray.push("If you have any questions, or if you don't get something, contact <@93026825432756224>");
+                      message.channel.sendMessage(messageArray);
+                  }
+                  if (params[0]) {
 
-                    params.forEach(function(param) {
-                        if (commands[param]) { // Look if suffix corresponds to a command
-                            var commando = commands[param]; // Make a varialbe for easier calls
-                            messageArray = []; // Build another message array
-                            messageArray.push("**Command:** `" + commando.name + "`"); // Push the name of the command to the array
-                            messageArray.push(""); // Leave a whiteline for readability
-                            if (commando.hasOwnProperty("usage")) { // Push special message if command needs a suffix.
-                                messageArray.push("**Usage:** `" + commando.name + " " + commando.usage + "`");
-                            } else {
-                                messageArray.push("**Usage:** `" + commando.name + "`");
-                            }
-                            messageArray.push("**Description:** " + commando.extendedhelp); // Push the extendedhelp to the array.
-                            if (commando.hasOwnProperty("adminOnly")) { // Push special message if command is restricted.
-                                messageArray.push("**This command is restricted to admins.**");
-                            }
-                            if (commando.hasOwnProperty("timeout")) { // Push special message if command has a cooldown
-                                messageArray.push("**This command has a cooldown of " + commando.timeout + " seconds.**");
-                            }
-                            if (param == "meme") { // If command requested is meme, print avalible meme's
-                                messageArray.push("");
-                                var str = "**Currently available memes:\n**";
-                                for (var m in meme) {
-                                    str += m + ", ";
-                                }
-                                messageArray.push(str);
-                            }
-                            message.channel.sendMessage(messageArray); // Send the array to the user
-                        } else {
-                            message.channel.sendMessage("There is no **" + param + "** command!");
-                        }
-                    });
+                      params.forEach(function(param) {
+                          if (commands[param]) { // Look if suffix corresponds to a command
+                              var commando = commands[param]; // Make a varialbe for easier calls
+                              messageArray = []; // Build another message array
+                              messageArray.push("**Command:** `" + commando.name + "`"); // Push the name of the command to the array
+                              messageArray.push(""); // Leave a whiteline for readability
+                              if (commando.hasOwnProperty("usage")) { // Push special message if command needs a suffix.
+                                  messageArray.push("**Usage:** `" + commando.name + " " + commando.usage + "`");
+                              } else {
+                                  messageArray.push("**Usage:** `" + commando.name + "`");
+                              }
+                              messageArray.push("**Description:** " + commando.extendedhelp); // Push the extendedhelp to the array.
+                              if (commando.hasOwnProperty("adminOnly")) { // Push special message if command is restricted.
+                                  messageArray.push("**This command is restricted to admins.**");
+                              }
+                              if (commando.hasOwnProperty("timeout")) { // Push special message if command has a cooldown
+                                  messageArray.push("**This command has a cooldown of " + commando.timeout + " seconds.**");
+                              }
+                              if (param == "meme") { // If command requested is meme, print avalible meme's
+                                  messageArray.push("");
+                                  var str = "**Currently available memes:\n**";
+                                  for (var m in meme) {
+                                      str += m + ", ";
+                                  }
+                                  messageArray.push(str);
+                              }
+                              message.channel.sendMessage(messageArray); // Send the array to the user
+                          } else {
+                              message.channel.sendMessage("There is no **" + param + "** command!");
+                          }
+                      });
 
-                }
-            } else {
-                var cmd = commands[cmdTxt];
-                if (cmd) {
-                    console.log("- - RECIVE COMMAND : " + cmdTxt);
-                    cmd.process(bot, message, params);
-                }
+                  }
+              } else {
+                  var cmd = commands[cmdTxt];
+                  if (cmd) {
+                      console.log("- - RECIVE COMMAND : " + cmdTxt);
+                      cmd.process(bot, message, params);
+                  }
+              }
             }
+          })
         } else {
             bd.addStat(message.author.id, message.channel.guild.id, message.channel.id, 'message', 1);
             bd.addStat(message.author.id, 'total', 'total', 'lastSeen', Date.now(), true);
@@ -204,12 +208,12 @@ bot.on("presenceUpdate", (oldUser, newUser) => {
         newUser: newUser
     })
 
-    bd.addStat(newUser.author.id, 'total', 'total', 'lastSeen', Date.now(), true);
+    bd.addStat(newUser.id, 'total', 'total', 'lastSeen', Date.now(), true);
 
 });
 
 /*****************************************************
-
+                                        GUILDMEMBERSPEAKING
 *****************************************************/
 bot.on("guildMemberSpeaking", (user, speaking) => {
     if (user.speaking) {

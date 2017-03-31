@@ -1,4 +1,9 @@
 {
     "prefix": "!",
     "token": "[YOUR TOKEN]",
-    "invite": "https://discordapp.com/oauth2/authorize?client_id=[YOUR CLIENT ID]&scope=bot&permissions=0"}
+    "invite": "https://discordapp.com/oauth2/authorize?client_id=[YOUR CLIENT ID]&scope=bot&permissions=0",
+    "admins": [
+      "[YOUR ID]",
+      "[ANOTHER ID]"
+     ]
+  }
