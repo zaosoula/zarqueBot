@@ -44,11 +44,8 @@ exports.lastId = function(username, eventName) {
 exports.addStat = function(username, serverName, channelName, statName, number, overwrite=false) {
     try {
         lastValue = db.getData("/" + username + "/stat/" + serverName + "/" + channelName + "/" + statName + "/value");
-        console.log(lastValue, number, lastValue + number);
     } catch (error) {
         lastValue = 0;
-        console.log(number, lastValue + number);
-
     }
     if(overwrite){
       db.push("/" + username + "/stat/" + serverName + "/" + channelName + "/" + statName + "/value", lastValue + number, true);
