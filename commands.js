@@ -19,6 +19,7 @@ exports.commands = {
     },
     "list": {
         name: "list",
+        description: "Return severs or users list knew by the bot.",
         extendedhelp: "Return severs or users list knew by the bot.",
         usage: "<servers|users>",
         process: function(bot, msg, params) {
@@ -76,9 +77,9 @@ exports.commands = {
     },
     "clear": {
         name: "clear",
-        usage: "<all|{username}>",
         description: "Clear data",
         extendedhelp: "Clear data",
+        usage: "<all|{id}>",
         process: function(bot, msg, params) {
             switch (params[0]) {
                 case 'all':
@@ -90,7 +91,7 @@ exports.commands = {
                         db.save();
                         msg.reply("Erase done");
                     } else {
-                        msg.reply("User parameter *all* or an username");
+                        msg.reply("User parameter *all* or an user id");
                     }
             }
         }
